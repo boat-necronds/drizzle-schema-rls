@@ -1,0 +1,134 @@
+{
+  "id": "5dcf0efd-31da-4860-a0df-d8706c74bf91",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.posts": {
+      "name": "posts",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "userId": {
+          "name": "userId",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "(auth.user_id())"
+        },
+        "post": {
+          "name": "post",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "insertedAt": {
+          "name": "insertedAt",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {
+        "crud-anonymous-policy-insert": {
+          "name": "crud-anonymous-policy-insert",
+          "as": "PERMISSIVE",
+          "for": "INSERT",
+          "to": [
+            "anonymous"
+          ],
+          "withCheck": "false"
+        },
+        "crud-anonymous-policy-update": {
+          "name": "crud-anonymous-policy-update",
+          "as": "PERMISSIVE",
+          "for": "UPDATE",
+          "to": [
+            "anonymous"
+          ],
+          "using": "false",
+          "withCheck": "false"
+        },
+        "crud-anonymous-policy-delete": {
+          "name": "crud-anonymous-policy-delete",
+          "as": "PERMISSIVE",
+          "for": "DELETE",
+          "to": [
+            "anonymous"
+          ],
+          "using": "false"
+        },
+        "crud-anonymous-policy-select": {
+          "name": "crud-anonymous-policy-select",
+          "as": "PERMISSIVE",
+          "for": "SELECT",
+          "to": [
+            "anonymous"
+          ],
+          "using": "true"
+        },
+        "crud-authenticated-policy-insert": {
+          "name": "crud-authenticated-policy-insert",
+          "as": "PERMISSIVE",
+          "for": "INSERT",
+          "to": [
+            "authenticated"
+          ],
+          "withCheck": "\n            (\n              auth.user_id() = \"posts\".\"userId\"::text\n              OR auth.session()->>'role' = 'admin'::text\n              OR auth.session()->>'role' = 'admin-post'::text\n            )\n          "
+        },
+        "crud-authenticated-policy-update": {
+          "name": "crud-authenticated-policy-update",
+          "as": "PERMISSIVE",
+          "for": "UPDATE",
+          "to": [
+            "authenticated"
+          ],
+          "using": "\n            (\n              auth.user_id() = \"posts\".\"userId\"::text\n              OR auth.session()->>'role' = 'admin'::text\n              OR auth.session()->>'role' = 'admin-post'::text\n            )\n          ",
+          "withCheck": "\n            (\n              auth.user_id() = \"posts\".\"userId\"::text\n              OR auth.session()->>'role' = 'admin'::text\n              OR auth.session()->>'role' = 'admin-post'::text\n            )\n          "
+        },
+        "crud-authenticated-policy-delete": {
+          "name": "crud-authenticated-policy-delete",
+          "as": "PERMISSIVE",
+          "for": "DELETE",
+          "to": [
+            "authenticated"
+          ],
+          "using": "\n            (\n              auth.user_id() = \"posts\".\"userId\"::text\n              OR auth.session()->>'role' = 'admin'::text\n              OR auth.session()->>'role' = 'admin-post'::text\n            )\n          "
+        },
+        "crud-authenticated-policy-select": {
+          "name": "crud-authenticated-policy-select",
+          "as": "PERMISSIVE",
+          "for": "SELECT",
+          "to": [
+            "authenticated"
+          ],
+          "using": "true"
+        }
+      },
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}
