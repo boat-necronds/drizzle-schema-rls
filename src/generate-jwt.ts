@@ -45,7 +45,7 @@ async function main() {
     })
 
     const todosList = await sql.select().from(todos)
-    console.log("todos list 5555 :", todosList)
+    console.log("todos list 5555  asdsadsas:", todosList)
   } catch (err) {
     console.error(err)
   }

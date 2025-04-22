@@ -20,7 +20,7 @@ async function generateAndExportKeys() {
   fs.writeFileSync('privateKey.jwk.json', JSON.stringify(privateJwk, null, 2));
   fs.writeFileSync('publicKey.jwk.json', JSON.stringify(publicJwk, null, 2));
 
-  console.log('Keys generated and saved to files.');
+  console.log('Keys generated and saved to files. asdadadsad');
 }
 
 generateAndExportKeys();
